@@ -1,7 +1,11 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
-const paddleWidth = 100;
+// Tetapkan saiz asal
+canvas.width = Math.min(window.innerWidth * 0.9, 500);
+canvas.height = canvas.width * 0.8;
+
+const paddleWidth = canvas.width * 0.2;
 const paddleHeight = 10;
 let paddleX = (canvas.width - paddleWidth) / 2;
 
@@ -22,6 +26,24 @@ let gameStarted = false;
 
 document.addEventListener("keydown", keyDownHandler);
 document.addEventListener("keyup", keyUpHandler);
+
+// Untuk fon: sentuh kiri/kanan
+canvas.addEventListener("touchstart", (e) => {
+  const touchX = e.touches[0].clientX;
+  if (touchX < window.innerWidth / 2) {
+    leftPressed = true;
+    rightPressed = false;
+  } else {
+    rightPressed = true;
+    leftPressed = false;
+  }
+  if (!gameStarted) startGame();
+});
+
+canvas.addEventListener("touchend", () => {
+  leftPressed = false;
+  rightPressed = false;
+});
 
 function keyDownHandler(e) {
   if (e.key === "Right" || e.key === "ArrowRight") {
@@ -51,7 +73,7 @@ function drawPaddle() {
 
 function drawBall() {
   ctx.beginPath();
-  ctx.arc(ballX, ballY, ballRadius, 0, Math.PI*2);
+  ctx.arc(ballX, ballY, ballRadius, 0, Math.PI * 2);
   ctx.fillStyle = "#f00";
   ctx.fill();
   ctx.closePath();
@@ -63,16 +85,16 @@ function draw() {
   drawPaddle();
   drawBall();
 
-  if(ballX + dx > canvas.width - ballRadius || ballX + dx < ballRadius) dx = -dx;
-  if(ballY + dy < ballRadius) {
+  if (ballX + dx > canvas.width - ballRadius || ballX + dx < ballRadius) dx = -dx;
+  if (ballY + dy < ballRadius) {
     dy = -dy;
-  } else if(ballY + dy > canvas.height - ballRadius) {
-    if(ballX > paddleX && ballX < paddleX + paddleWidth) {
+  } else if (ballY + dy > canvas.height - ballRadius) {
+    if (ballX > paddleX && ballX < paddleX + paddleWidth) {
       dy = -dy;
       score++;
     } else {
       lives--;
-      if(lives <= 0) {
+      if (lives <= 0) {
         clearInterval(interval);
         gameOver();
         return;
@@ -86,9 +108,9 @@ function draw() {
   ballX += dx;
   ballY += dy;
 
-  if(rightPressed && paddleX < canvas.width - paddleWidth) {
+  if (rightPressed && paddleX < canvas.width - paddleWidth) {
     paddleX += 5;
-  } else if(leftPressed && paddleX > 0) {
+  } else if (leftPressed && paddleX > 0) {
     paddleX -= 5;
   }
 
