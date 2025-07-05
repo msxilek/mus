@@ -1,7 +1,6 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
-// Tetapkan saiz asal
 canvas.width = Math.min(window.innerWidth * 0.9, 500);
 canvas.height = canvas.width * 0.8;
 
@@ -27,7 +26,7 @@ let gameStarted = false;
 document.addEventListener("keydown", keyDownHandler);
 document.addEventListener("keyup", keyUpHandler);
 
-// Untuk fon: sentuh kiri/kanan
+// Kawalan touch untuk fon
 canvas.addEventListener("touchstart", (e) => {
   const touchX = e.touches[0].clientX;
   if (touchX < window.innerWidth / 2) {
