@@ -1,0 +1,28 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: linear-gradient(lightyellow, lightcyan);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+#game-container {
+  display: inline-block;
+  border: 2px solid #000;
+  padding: 10px;
+  background-color: white;
+  border-radius: 10px;
+}
+
+canvas {
+  background: linear-gradient(lightyellow, lightcyan);
+  border: 2px solid black;
+  display: block;
+  margin: auto;
+  border-radius: 10px;
+}
+
+#info {
+  margin-top: 10px;
+  font-weight: bold;
+}
