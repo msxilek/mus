@@ -5,7 +5,7 @@ canvas.width = Math.min(window.innerWidth * 0.9, 500);
 canvas.height = canvas.width * 0.8;
 
 const paddleWidth = canvas.width * 0.2;
-const paddleHeight = 10;
+const paddleHeight = 12;
 let paddleX = (canvas.width - paddleWidth) / 2;
 
 let ballRadius = 10;
@@ -26,7 +26,6 @@ let gameStarted = false;
 document.addEventListener("keydown", keyDownHandler);
 document.addEventListener("keyup", keyUpHandler);
 
-// Kawalan dengan keyboard
 function keyDownHandler(e) {
   if (e.key === "Right" || e.key === "ArrowRight") {
     rightPressed = true;
@@ -45,34 +44,63 @@ function keyUpHandler(e) {
   }
 }
 
-// Kawalan dengan butang sentuh
-const leftBtn = document.getElementById("leftBtn");
-const rightBtn = document.getElementById("rightBtn");
-
-leftBtn.addEventListener("touchstart", () => {
+function tekanKiri() {
   leftPressed = true;
   rightPressed = false;
   if (!gameStarted) startGame();
-});
-leftBtn.addEventListener("touchend", () => {
+}
+function lepasKiri() {
   leftPressed = false;
-});
-
-rightBtn.addEventListener("touchstart", () => {
+}
+function tekanKanan() {
   rightPressed = true;
   leftPressed = false;
   if (!gameStarted) startGame();
-});
-rightBtn.addEventListener("touchend", () => {
+}
+function lepasKanan() {
   rightPressed = false;
+}
+
+const leftBtn = document.getElementById("leftBtn");
+const rightBtn = document.getElementById("rightBtn");
+
+// ←
+leftBtn.addEventListener("mousedown", tekanKiri);
+leftBtn.addEventListener("mouseup", lepasKiri);
+leftBtn.addEventListener("touchstart", (e) => {
+  e.preventDefault();
+  tekanKiri();
+});
+leftBtn.addEventListener("touchend", (e) => {
+  e.preventDefault();
+  lepasKiri();
+});
+
+// →
+rightBtn.addEventListener("mousedown", tekanKanan);
+rightBtn.addEventListener("mouseup", lepasKanan);
+rightBtn.addEventListener("touchstart", (e) => {
+  e.preventDefault();
+  tekanKanan();
+});
+rightBtn.addEventListener("touchend", (e) => {
+  e.preventDefault();
+  lepasKanan();
 });
 
 function drawPaddle() {
+  const gradient = ctx.createLinearGradient(paddleX, 0, paddleX + paddleWidth, 0);
+  gradient.addColorStop(0, '#00f2fe');
+  gradient.addColorStop(1, '#4facfe');
+
   ctx.beginPath();
   ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
-  ctx.fillStyle = "#0095DD";
+  ctx.fillStyle = gradient;
+  ctx.shadowColor = "#000";
+  ctx.shadowBlur = 10;
   ctx.fill();
   ctx.closePath();
+  ctx.shadowBlur = 0;
 }
 
 function drawBall() {
@@ -85,7 +113,6 @@ function drawBall() {
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-
   drawPaddle();
   drawBall();
 
