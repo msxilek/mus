@@ -26,24 +26,7 @@ let gameStarted = false;
 document.addEventListener("keydown", keyDownHandler);
 document.addEventListener("keyup", keyUpHandler);
 
-// Kawalan touch untuk fon
-canvas.addEventListener("touchstart", (e) => {
-  const touchX = e.touches[0].clientX;
-  if (touchX < window.innerWidth / 2) {
-    leftPressed = true;
-    rightPressed = false;
-  } else {
-    rightPressed = true;
-    leftPressed = false;
-  }
-  if (!gameStarted) startGame();
-});
-
-canvas.addEventListener("touchend", () => {
-  leftPressed = false;
-  rightPressed = false;
-});
-
+// Kawalan dengan keyboard
 function keyDownHandler(e) {
   if (e.key === "Right" || e.key === "ArrowRight") {
     rightPressed = true;
@@ -61,6 +44,28 @@ function keyUpHandler(e) {
     leftPressed = false;
   }
 }
+
+// Kawalan dengan butang sentuh
+const leftBtn = document.getElementById("leftBtn");
+const rightBtn = document.getElementById("rightBtn");
+
+leftBtn.addEventListener("touchstart", () => {
+  leftPressed = true;
+  rightPressed = false;
+  if (!gameStarted) startGame();
+});
+leftBtn.addEventListener("touchend", () => {
+  leftPressed = false;
+});
+
+rightBtn.addEventListener("touchstart", () => {
+  rightPressed = true;
+  leftPressed = false;
+  if (!gameStarted) startGame();
+});
+rightBtn.addEventListener("touchend", () => {
+  rightPressed = false;
+});
 
 function drawPaddle() {
   ctx.beginPath();
