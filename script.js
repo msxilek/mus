@@ -11,8 +11,8 @@ let paddleX = (canvas.width - paddleWidth) / 2;
 let ballRadius = 10;
 let ballX = canvas.width / 2;
 let ballY = canvas.height - 30;
-let dx = 20;
-let dy = -20;
+let dx = 100;
+let dy = -100;
 
 let rightPressed = false;
 let leftPressed = false;
@@ -165,9 +165,9 @@ function startGame() {
 function resetBall() {
   ballX = canvas.width / 2;
   ballY = canvas.height - 30;
-  dx = 20;
-  dy = -20;
-  paddleX = (canvas.width - paddleWidth) / 10;
+  dx = 100;
+  dy = -100;
+  paddleX = (canvas.width - paddleWidth) / 50;
 }
 
 function gameOver() {
