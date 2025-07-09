@@ -22,7 +22,7 @@ h1 {
 canvas {
   width: 100%;
   height: auto;
-  background: linear-gradient(#fffbd5, #b20a2c);
+  background: linear-gradient(lightyellow, lightcyan);
   border: 2px solid black;
   border-radius: 10px;
   display: block;
